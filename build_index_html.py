@@ -600,7 +600,7 @@ html_content = f"""<!DOCTYPE html>
     <a href="#artworks">Featured Artworks</a>
     <a href="#data-lookup">Data Lookup</a>
     <a href="#masterclass">24-Day Masterclass</a>
-    <a href="a_christmas_chart_carol_report.pdf" target="_blank">PDF Report</a>
+    <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf" download="a_christmas_chart_carol_report.pdf" target="_blank">PDF Report</a>
     <a href="https://github.com/Frank-Ellingsen/chart_tales" target="_blank">GitHub Repo</a>
   </div>
 </nav>
@@ -616,7 +616,7 @@ html_content = f"""<!DOCTYPE html>
     <div class="hero-actions">
       <a href="#artworks" class="btn btn-primary">🎨 Explore Featured Visuals</a>
       <a href="#data-lookup" class="btn btn-secondary">🔍 Dickens Data Lookup</a>
-      <a href="a_christmas_chart_carol_report.pdf" target="_blank" class="btn btn-secondary">📄 Download 28-Page PDF Report</a>
+      <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf" download="a_christmas_chart_carol_report.pdf" class="btn btn-secondary">📄 Download 28-Page PDF Report</a>
     </div>
   </div>
 </header>
@@ -744,7 +744,7 @@ html_content = f"""<!DOCTYPE html>
     </p>
     <p style="margin-top: 8px;">
       <a href="https://github.com/Frank-Ellingsen/chart_tales" target="_blank">GitHub: Frank-Ellingsen/chart_tales</a> &bull; 
-      <a href="a_christmas_chart_carol_report.pdf" target="_blank">Download PDF Report</a> &bull; 
+      <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf" download="a_christmas_chart_carol_report.pdf" target="_blank">📄 Download 28-Page PDF Report</a> &bull; 
       <a href="https://frank-ellingsen.github.io/datafrank.github.io/" target="_blank">Portfolio</a>
     </p>
   </div>

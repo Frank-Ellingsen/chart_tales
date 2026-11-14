@@ -1,14 +1,29 @@
 import os
 import sys
+import io
 import base64
 import subprocess
+from PIL import Image
 
-def image_to_base64(path):
+def image_to_base64_jpeg(path, quality=88, max_size=1400):
     if not os.path.exists(path):
         return ""
-    with open(path, "rb") as f:
-        data = f.read()
-    return "data:image/png;base64," + base64.b64encode(data).decode("utf-8")
+    im = Image.open(path).convert("RGB")
+    # Resize slightly if too large to keep PDF crisp yet lightweight
+    if max(im.size) > max_size:
+        im.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, format="JPEG", quality=quality, optimize=True)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
+
+def image_to_thumbnail_jpeg(path, max_size=320, quality=80):
+    if not os.path.exists(path):
+        return ""
+    im = Image.open(path).convert("RGB")
+    im.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, format="JPEG", quality=quality, optimize=True)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
 
 dickens_posts = [
     {
@@ -18,7 +33,7 @@ dickens_posts = [
         "title": "A Christmas Chart Carol: The Storyteller Meets Data Storytelling",
         "chart_type": "Advent Series Poster & Narrative Framework",
         "question": "What if an Advent calendar taught you data storytelling through Charles Dickens?",
-        "image": "img24/img0.png",
+        "image": "img24/image00.png",
         "dickens_data": {
             "theme": "Charles Dickens' 35-Year Career & Victorian Legacy (1812–1870)",
             "key_metric": "15 Major Novels | 5 Christmas Books | 989+ Named Characters | 300+ Screen Adaptations",
@@ -49,7 +64,7 @@ Across 24 days, we will journey through the life, masterworks, screen adaptation
 Every single post includes a collectible Victorian-meets-modern chart visual, authentic literary data, Dickens quotes, eccentric trivia, and an actionable rule on <strong>Headlines, Legends, Labels, and the Data-Ink Ratio</strong>.<br><br>
 Window 1 opens tomorrow, <strong>1 December</strong>.<br><br>
 <em>Because numbers have long memories... but stories give them a voice.</em><br><br>
-🔗 Follow the series: https://frank-ellingsen.github.io/datafrank.github.io/<br><br>
+🔗 Follow the series: https://frank-ellingsen.github.io/chart_tales/<br><br>
 #DataStorytelling #DataVisualization #CharlesDickens #AChristmasChartCarol #Infographics #PowerBI #Tufte #VisualVocabulary""",
         "storytelling_rule": "The Narrative Arc: Every chart must have a protagonist (the data point that matters), an antagonist (the obstacle, variance, or comparison), and a resolution (the decision or insight)."
     },
@@ -692,7 +707,7 @@ A <strong>bubble chart</strong> extends the scatter plot by varying the marker s
 Instantly, <em>Oliver Twist</em> and <em>Great Expectations</em> pop off the canvas. They don't have the monstrous 360,000 words of <em>Bleak House</em>, but their bubbles are massive because their focused plots and iconic characters made them Hollywood gold.<br><br>
 <strong>📊 Today's Data Storytelling Lesson: The Bubble Scaling Law</strong><br>
 ⚠️ <strong>The #1 Lie in Bubble Charts:</strong><br>
-If Adaptation Count doubles from 20 to 40, you must double the **area** of the circle ($\pi r^2$). If you double the radius, the circle's visual area multiplies by **400%**, grossly distorting the data.<br>
+If Adaptation Count doubles from 20 to 40, you must double the **area** of the circle (pi * r^2). If you double the radius, the circle's visual area multiplies by **400%**, grossly distorting the data.<br>
 Always scale bubbles by area, and keep bubbles slightly transparent so overlapping circles don't swallow their neighbors.<br><br>
 <em>But numbers have long memories.</em><br><br>
 #BubbleChart #DataVisualization #Tufte #DataIntegrity #CharlesDickens""",
@@ -1038,7 +1053,7 @@ After all...<br><br>
 Merry Christmas to you, your teams, and your families.<br><br>
 Frank Ellingsen<br>
 <em>Tales with Charts</em><br>
-Portfolio: https://frank-ellingsen.github.io/datafrank.github.io/<br><br>
+Portfolio: https://frank-ellingsen.github.io/chart_tales/<br><br>
 #AChristmasChartCarol #CharlesDickens #DataStorytelling #DataVisualization #Tufte #VisualVocabulary #Infographics #MerryChristmas""",
         "storytelling_rule": "The Soul of Data: Data without narrative is a cold ledger. Narrative without data is speculation. When fused with intentional design, data storytelling inspires human action."
     }
@@ -1048,11 +1063,11 @@ html_template = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>A Christmas Chart Carol — 25 Lessons in Charts & Storytelling with Charles Dickens</title>
+<title>A Christmas Chart Carol — 24-Day Advent Calendar & Masterclass</title>
 <style>
   @page {
     size: A4 portrait;
-    margin: 10mm 12mm 10mm 12mm;
+    margin: 7mm 10mm 7mm 10mm;
   }
   
   * {
@@ -1071,6 +1086,7 @@ html_template = """<!DOCTYPE html>
     line-height: 1.4;
   }
 
+  /* PAGE 1: COVER PAGE with image00 on top */
   .cover-page {
     page-break-after: always;
     break-after: page;
@@ -1078,7 +1094,7 @@ html_template = """<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20mm 15mm 18mm 15mm;
+    padding: 16mm 14mm 16mm 14mm;
     background: linear-gradient(135deg, #0A1128 0%, #101F42 55%, #1A2E5A 100%);
     color: #FFFFFF;
     border-radius: 4px;
@@ -1086,59 +1102,60 @@ html_template = """<!DOCTYPE html>
 
   .cover-header {
     border-bottom: 2px solid #C5A059;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .cover-series {
-    font-size: 12pt;
+    font-size: 11pt;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #C5A059;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .cover-title {
-    font-size: 30pt;
+    font-size: 28pt;
     font-weight: 800;
     line-height: 1.15;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     color: #FFFFFF;
   }
 
   .cover-subtitle {
-    font-size: 15pt;
+    font-size: 14pt;
     font-style: italic;
     color: #E2E8F0;
     margin: 0;
   }
 
-  .cover-image-container {
+  .cover-hero-box {
     text-align: center;
-    margin: 15px 0;
+    margin: 10px 0;
   }
 
-  .cover-image {
-    max-height: 330px;
-    max-width: 82%;
+  .cover-hero-img {
+    max-height: 380px;
+    max-width: 95%;
     border-radius: 8px;
     border: 3px solid #C5A059;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.6);
   }
 
   .cover-footer {
     border-top: 1px solid rgba(197, 160, 89, 0.4);
-    padding-top: 12px;
+    padding-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    font-size: 9.5pt;
+    font-size: 9pt;
     color: #CBD5E1;
   }
 
   .cover-author strong {
     color: #FFFFFF;
-    font-size: 11.5pt;
+    font-size: 11pt;
   }
 
   .cover-meta {
@@ -1150,11 +1167,11 @@ html_template = """<!DOCTYPE html>
     font-weight: 600;
   }
 
-  /* Table of Contents / Index */
+  /* PAGE 2: TABLE OF CONTENTS */
   .toc-page {
     page-break-after: always;
     break-after: page;
-    padding: 6mm 4mm;
+    padding: 4mm 4mm;
   }
 
   .section-title {
@@ -1169,20 +1186,20 @@ html_template = """<!DOCTYPE html>
   .toc-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8pt;
+    font-size: 7.2pt;
   }
 
   .toc-table th {
     background-color: #0A1128;
     color: #FFFFFF;
     text-align: left;
-    padding: 5px 7px;
+    padding: 2.5px 5px;
     font-weight: 600;
     border: none;
   }
 
   .toc-table td {
-    padding: 4.5px 7px;
+    padding: 1.5px 5px;
     border-bottom: 1px solid #E2E8F0;
   }
 
@@ -1206,7 +1223,116 @@ html_template = """<!DOCTYPE html>
   .badge-act4 { background-color: #EDE9FE; color: #5B21B6; }
   .badge-finale { background-color: #D1FAE5; color: #065F46; }
 
-  /* Post Page */
+  /* PAGE 3: 24-DAY ADVENT CALENDAR VISUAL SPREAD */
+  .calendar-spread-page {
+    page-break-after: always;
+    break-after: page;
+    padding: 4mm 2mm;
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .calendar-header {
+    text-align: center;
+    border-bottom: 2px solid #C5A059;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .calendar-header h2 {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #0A1128;
+    margin: 0;
+  }
+  .calendar-header p {
+    font-size: 8pt;
+    color: #64748B;
+    margin: 2px 0 0 0;
+  }
+
+  .calendar-grid-24 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 8px;
+    flex-grow: 1;
+  }
+
+  .cal-window {
+    border: 1px solid #CBD5E1;
+    border-radius: 5px;
+    background: #F8FAFC;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+  }
+
+  .cal-window.act1 { border-top: 3px solid #F59E0B; }
+  .cal-window.act2 { border-top: 3px solid #3B82F6; }
+  .cal-window.act3 { border-top: 3px solid #EF4444; }
+  .cal-window.act4 { border-top: 3px solid #8B5CF6; }
+  .cal-window.act-finale { border-top: 3px solid #10B981; background: #F0FDF4; }
+
+  .cal-window-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 6.8pt;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .cal-day-num {
+    background: #0A1128;
+    color: #C5A059;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 7.2pt;
+    font-weight: 800;
+  }
+  .cal-chart-name {
+    color: #475569;
+    text-transform: uppercase;
+    font-size: 6.2pt;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 110px;
+  }
+
+  .cal-img-box {
+    text-align: center;
+    background: #050914;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px 0;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cal-img {
+    max-height: 50px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 2px;
+  }
+
+  .cal-topic {
+    font-size: 6.2pt;
+    color: #1E293B;
+    font-weight: 600;
+    line-height: 1.15;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* DAILY POST PAGES (PAGES 4–28) */
   .post-page {
     page-break-after: always;
     break-after: page;
@@ -1458,36 +1584,36 @@ html_template = """<!DOCTYPE html>
 </head>
 <body>
 
-<!-- COVER PAGE -->
+<!-- PAGE 1: COVER PAGE with image00 on top -->
 <div class="cover-page">
   <div class="cover-header">
-    <div class="cover-series">Tales with Charts · Masterclass Edition</div>
+    <div class="cover-series">Tales with Charts · Executive Edition</div>
     <h1 class="cover-title">A Christmas Chart Carol</h1>
     <div class="cover-subtitle">24 Lessons in Charts, Visual Storytelling & Charles Dickens</div>
   </div>
 
-  <div class="cover-image-container">
-    <img src="{COVER_IMAGE_B64}" class="cover-image" alt="A Christmas Chart Carol Poster">
+  <div class="cover-hero-box">
+    <img src="{COVER_IMAGE_B64}" class="cover-hero-img" alt="A Christmas Chart Carol - Cover Poster image00">
   </div>
 
   <div class="cover-footer">
     <div class="cover-author">
       <strong>Frank Ellingsen</strong><br>
       Data Storyteller & Business Intelligence Specialist<br>
-      Featuring: <em>Charles Dickens' Life, Books, Adaptations, Quotes & Fun Facts</em>
+      Series: <em>A Christmas Chart Carol</em> &bull; Portfolio: <em>frank-ellingsen.github.io/chart_tales</em>
     </div>
     <div class="cover-meta">
       24-Day LinkedIn Advent Series<br>
-      <span>25 Complete Masterclass Posts & Visuals</span><br>
-      Portfolio: frank-ellingsen.github.io
+      <span>28-Page Executive Masterclass Report</span><br>
+      Featuring: <em>Charles Dickens Life, Books, Adaptations & Lore</em>
     </div>
   </div>
 </div>
 
-<!-- TABLE OF CONTENTS -->
+<!-- PAGE 2: TABLE OF CONTENTS -->
 <div class="toc-page">
   <div class="section-title">Masterclass Curriculum & Visual Index</div>
-  <p style="font-size: 8.5pt; color: #475569; margin-bottom: 10px;">
+  <p style="font-size: 8pt; color: #475569; margin-bottom: 4px;">
     An executive storytelling roadmap blending Charles Dickens' 35-year literary life with Edward Tufte's data-ink ratio and the Financial Times Visual Vocabulary. Every day delivers an actionable data storytelling lesson on headlines, legends, labels, and chart design grounded in authentic historical and cinematic data.
   </p>
 
@@ -1506,9 +1632,9 @@ html_template = """<!DOCTYPE html>
     </tbody>
   </table>
 
-  <div style="margin-top: 12px; padding: 8px 10px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; font-size: 7.6pt; color: #475569;">
+  <div style="margin-top: 3px; padding: 5px 8px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; font-size: 7.4pt; color: #475569;">
     <strong>The 4 Pillars of the Dickensian Data Storytelling Masterclass:</strong>
-    <ul style="margin: 3px 0 0 14px; padding: 0;">
+    <ul style="margin: 2px 0 0 14px; padding: 0;">
       <li><strong>Action Headlines vs. Topic Labels:</strong> State the takeaway conclusion directly in the title; never force the reader to decode the insight.</li>
       <li><strong>Direct Labeling over Disconnected Legends:</strong> Eradicate floating color legends; place category names directly at the start or terminus of curves and bars.</li>
       <li><strong>Annotations & Milestone Pointers:</strong> Guide the reader's eye to inflection points, historical turning points, and narrative anomalies.</li>
@@ -1517,7 +1643,30 @@ html_template = """<!DOCTYPE html>
   </div>
 </div>
 
-<!-- 25 POST PAGES -->
+<!-- PAGE 3: 24-DAY ADVENT CALENDAR SPREAD (EVERY CHART) -->
+<div class="calendar-spread-page">
+  <div class="calendar-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <img src="{COVER_IMAGE_B64}" style="height: 44px; width: 130px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 1px solid #C5A059;" alt="Advent Calendar Header Banner">
+      <div style="text-align: left;">
+        <h2 style="font-size: 13.5pt; margin: 0; color: #0A1128;">🎄 The 24-Day Advent Calendar: All 24 Charts & Windows</h2>
+        <p style="font-size: 7.5pt; color: #64748B; margin: 1px 0 0 0;">A visual masterclass in charts & storytelling through Charles Dickens &bull; The Ghosts of Data Past, Present & Yet to Come</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-grid-24">
+{CALENDAR_WINDOWS}
+  </div>
+
+  <div class="page-footer" style="margin-top: 6px;">
+    <div>A Christmas Chart Carol &bull; The 24-Day Advent Visual Grid</div>
+    <div>Tales with Charts &bull; Frank Ellingsen</div>
+    <div>Page 3 of 28</div>
+  </div>
+</div>
+
+<!-- PAGES 4–28: THE 25 DETAILED POST PAGES -->
 {POST_PAGES}
 
 </body>
@@ -1525,12 +1674,19 @@ html_template = """<!DOCTYPE html>
 """
 
 def generate():
-    print("Converting 25 images to base64...")
+    print("Loading optimized image assets...")
+    # Load image00 for the cover
+    cover_b64 = image_to_base64_jpeg("img24/image00.png", quality=90, max_size=1500)
+    print("Cover image00 loaded successfully.")
+
+    # Load high-res post images
     images_b64 = {}
+    thumbs_b64 = {}
     for p in dickens_posts:
         path = p["image"]
-        images_b64[path] = image_to_base64(path)
-        print(f"Loaded {path} ({len(images_b64[path])} chars)")
+        images_b64[path] = image_to_base64_jpeg(path, quality=86, max_size=1200)
+        thumbs_b64[path] = image_to_thumbnail_jpeg(path, max_size=280, quality=78)
+        print(f"Loaded {path}")
 
     # Build TOC rows
     toc_rows = []
@@ -1558,10 +1714,46 @@ def generate():
       </tr>"""
         toc_rows.append(row)
 
-    # Build Post Pages
+    # Build 24 Calendar Windows (Days 1 to 24)
+    cal_windows = []
+    for p in dickens_posts:
+        if p["id"] == 0:
+            continue  # Prologue is covered on cover & Day 0
+        
+        act = p["act"]
+        if "ACT I" in act:
+            act_class = "act1"
+        elif "ACT II" in act:
+            act_class = "act2"
+        elif "ACT III" in act:
+            act_class = "act3"
+        elif "ACT IV" in act:
+            act_class = "act4"
+        else:
+            act_class = "act-finale"
+
+        day_num = p["id"]
+        chart_name = p["title"].split(":")[0].replace("The ", "")
+        thumb = thumbs_b64[p["image"]]
+        short_topic = p["dickens_data"]["theme"].split(":")[0]
+
+        win_html = f"""    <div class="cal-window {act_class}">
+      <div class="cal-window-top">
+        <span class="cal-day-num">{day_num}</span>
+        <span class="cal-chart-name">{chart_name}</span>
+      </div>
+      <div class="cal-img-box">
+        <img src="{thumb}" class="cal-img" alt="Day {day_num} Chart">
+      </div>
+      <div class="cal-topic">{short_topic}</div>
+    </div>"""
+        cal_windows.append(win_html)
+
+    # Build Post Pages (Page 4 through 28)
     post_pages = []
     for p in dickens_posts:
         img_b64 = images_b64[p["image"]]
+        page_num = p["id"] + 4  # Page 1: Cover, Page 2: TOC, Page 3: Calendar, Page 4+: Posts
         
         post_html = f"""<div class="post-page">
   <div class="post-header">
@@ -1576,7 +1768,7 @@ def generate():
     <div class="visual-column">
       <div class="visual-card">
         <img src="{img_b64}" class="visual-img" alt="{p['title']}">
-        <div class="visual-caption">Visual Asset: <code>{os.path.basename(p['image'])}</code> · Visual Vocabulary: {p['chart_type']}</div>
+        <div class="visual-caption">Visual Asset: <code>{os.path.basename(p['image'])}</code> &bull; Category: {p['chart_type']}</div>
       </div>
 
       <div class="dickens-box">
@@ -1611,7 +1803,7 @@ def generate():
         <div class="linkedin-header">
           <div class="linkedin-logo">in</div>
           <div class="linkedin-author-info">
-            <strong>Frank Ellingsen</strong> · 1st<br>
+            <strong>Frank Ellingsen</strong> &bull; 1st<br>
             Tales with Charts | Data Storytelling & Visual Intelligence
           </div>
         </div>
@@ -1628,15 +1820,16 @@ def generate():
   </div>
 
   <div class="page-footer">
-    <div>A Christmas Chart Carol · Tales with Charts · Frank Ellingsen</div>
-    <div>Charles Dickens: Life, Books, Adaptations & Lore · Portfolio: frank-ellingsen.github.io</div>
-    <div>Page {p['id'] + 3}</div>
+    <div>A Christmas Chart Carol &bull; Tales with Charts &bull; Frank Ellingsen</div>
+    <div>Charles Dickens: Life, Books, Adaptations & Lore &bull; Portfolio: frank-ellingsen.github.io/chart_tales</div>
+    <div>Page {page_num} of 28</div>
   </div>
 </div>"""
         post_pages.append(post_html)
 
-    full_html = html_template.replace("{COVER_IMAGE_B64}", images_b64["img24/img0.png"])
+    full_html = html_template.replace("{COVER_IMAGE_B64}", cover_b64)
     full_html = full_html.replace("{TOC_ROWS}", "\n".join(toc_rows))
+    full_html = full_html.replace("{CALENDAR_WINDOWS}", "\n".join(cal_windows))
     full_html = full_html.replace("{POST_PAGES}", "\n\n".join(post_pages))
 
     html_out = "a_christmas_chart_carol_report.html"

@@ -11,6 +11,15 @@
   <img src="img24/image00.png" alt="A Christmas Chart Carol — Tales with Charts" width="680" style="border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);"/>
 </p>
 
+<p align="center">
+  <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf">
+    <img src="https://img.shields.io/badge/PDF_Report-28_Pages_Publication_Quality-C5A059?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Download PDF Report"/>
+  </a>
+  <br>
+  <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf">📄 Download 28-Page PDF Report</a></strong> &bull; 
+  <strong><a href="https://frank-ellingsen.github.io/chart_tales/">🌐 Interactive Web Portal</a></strong>
+</p>
+
 ---
 
 ## 📖 Overview
