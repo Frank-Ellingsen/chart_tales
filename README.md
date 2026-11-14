@@ -2,7 +2,7 @@
 ### *A Christmas Chart Carol — 24 Lessons in Charts & Storytelling with Data through Charles Dickens*
 
 **Author:** Frank Ellingsen | *Tales with Charts*  
-**Portfolio:** [[frank-ellingsen.github.io](https://frank-ellingsen.github.io/datafrank.github.io/)  ](https://frank-ellingsen.github.io/chart_tales/)
+**Portfolio:** (https://frank-ellingsen.github.io/chart_tales/)
 **Visual Pedagogy:** Edward Tufte Data-Ink Ratio & The Financial Times Visual Vocabulary  
 
 ---
