@@ -12,11 +12,12 @@
 </p>
 
 <p align="center">
-  <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf">
-    <img src="https://img.shields.io/badge/PDF_Report-28_Pages_Publication_Quality-C5A059?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Download PDF Report"/>
+  <a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_advent_calendar_2026.pdf">
+    <img src="https://img.shields.io/badge/Advent_Calendar_2026-24_Days_Visual_PDF-C5A059?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Download 24-Day Advent Calendar PDF"/>
   </a>
   <br>
-  <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_report.pdf">📄 Download 28-Page PDF Report</a></strong> &bull; 
+  <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_advent_calendar_2026.pdf">📅 Download 24-Day Advent Calendar (PDF)</a></strong> &bull; 
+  <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_advent_calendar_1_to_12_dec_2026.pdf">📄 Dec 1–12 Edition (PDF)</a></strong> &bull; 
   <strong><a href="https://frank-ellingsen.github.io/chart_tales/">🌐 Interactive Web Portal</a></strong>
 </p>
 
