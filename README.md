@@ -17,7 +17,6 @@
   </a>
   <br>
   <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_advent_calendar_2026.pdf">📅 Download 24-Day Advent Calendar (PDF)</a></strong> &bull; 
-  <strong><a href="https://frank-ellingsen.github.io/chart_tales/a_christmas_chart_carol_advent_calendar_1_to_12_dec_2026.pdf">📄 Dec 1–12 Edition (PDF)</a></strong> &bull; 
   <strong><a href="https://frank-ellingsen.github.io/chart_tales/">🌐 Interactive Web Portal</a></strong>
 </p>
 
