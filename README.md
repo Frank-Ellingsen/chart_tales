@@ -7,6 +7,12 @@
 
 ---
 
+<p align="center">
+  <img src="img24/image00.png" alt="A Christmas Chart Carol — Tales with Charts" width="680" style="border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);"/>
+</p>
+
+---
+
 ## 📖 Overview
 
 **chart_tales** is a 24-day LinkedIn Advent Masterclass connecting the principles of modern data visualization, information design, and analytical storytelling with the life, books, screen adaptations, theater triumphs, eccentric habits, and lore of **Charles Dickens (1812–1870)**.
@@ -47,7 +53,8 @@ chart_tales/
 ├── a_christmas_chart_carol_report.html # Self-contained HTML report
 ├── generate_pdf_report.py              # Automated Python PDF generator (Edge headless)
 ├── img24/                              # 25 high-resolution Victorian & modern visual cards
-│   ├── img0.png                        # Series Poster & Prologue
+│   ├── image00.png                     # Series Cover Poster
+│   ├── img0.png                        # Prologue Visual Card
 │   ├── image1.png                      # Day 1: Bar Chart
 │   └── ...                             # Days 2 to 24 (image2.png to image24.png)
 └── data/
