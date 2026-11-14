@@ -1,0 +1,149 @@
+https://www.bing.com/videos/riverview/relatedvideo?q=tell%20no%20tales%20(TNT)%20youtube&mid=D57A5429D3DE29C58DDED57A5429D3DE29C58DDE&ajaxhist=0
+
+A Christmas Chart Carol
+The Ghosts of Data Past, Present and Future
+
+Past → What happened?
+ Present → Where are we now?
+ Future → Where are we heading?
+
+Og så kan selve historien bygges som tre “staves”, akkurat som et lite dataeventyr:
+
+👻 The Ghost of Data Past
+ Historical trends, previous performance, past decisions.
+
+🎄 The Ghost of Data Present
+ Current KPIs, variances, anomalies and what's driving them.
+
+🔮 The Ghost of Data Future
+ Forecasts, scenarios, risks and possible outcomes.
+
+For din controller/BI-profil liker jeg spesielt at historien naturlig ender med decision/action, ikke bare en pen visualisering:
+
+Past → Present → Future → Decision
+
+A Christmas Chart Carol kan derfor være hovedhistorien, mens Tales with Charts blir serienavnet. Det gir deg også rom for senere historier som A Tale of Two Axes, Once Upon a Dashboard, osv.
+
+# A Christmas Chart Carol
+
+### *The Ghosts of Data Past, Present and Yet to Come*
+
+There are numbers that are dead to us.
+
+Last year's revenue. Yesterday's production. The budget approved and forgotten. The forecast confidently presented in March and quietly replaced in September.
+
+We place them in tables, archive them in databases, and suppose their business with us is finished.
+
+But numbers have long memories.
+
+On Christmas Eve, Ebenezer Chart sat alone with his dashboard, surrounded by precisely such ghosts.
+
+He did not see them, of course.
+
+He saw columns.
+
+He saw percentages.
+
+He saw Actual, Budget and Forecast.
+
+Above all, he saw variance.
+
+What he did not see was the story.
+
+That would require three spirits.
+
+One from Data Past.
+
+One from Data Present.
+
+And one from Data Yet to Come.
+
+And all three had something to show him.
+
+Yes. A LinkedIn advent calendar could work brilliantly with this theme: one chart type each day, told as a tiny “Christmas Chart Carol.” The Financial Times Visual Vocabulary is explicitly designed around choosing charts according to the relationship most important in the story, with categories including deviation, correlation, ranking, distribution, change over time, magnitude, part-to-whole, spatial and flow.
+
+I’d make the series educational rather than trying to reproduce the FT guide itself:
+
+🎄 A Christmas Chart Carol
+
+24 Days of Data Storytelling
+
+The Ghosts of Data Past, Present and Yet to Come
+
+Each day:
+
+🎁 Day 1 — Line Chart
+ A small Christmas-themed dataset → chart → what story does it tell? → when should you use it?
+
+🎁 Day 2 — Slope Chart
+ 🎁 Day 3 — Dumbbell Plot
+ 🎁 Day 4 — Small Multiples
+ ...and so on until Christmas Eve.
+
+The FT Visual Vocabulary itself says it is not intended as an exhaustive list or a “wizard”, but as a starting point for producing informative and meaningful visualisations. That makes your series potentially more interesting if you focus on the story and practical example behind each chart, rather than simply cataloguing chart types.
+
+And there is a nice pedigree here: the FT says its vocabulary was inspired by Jon Schwabish and Severino Ribecca's Graphic Continuum.
+
+The visual identity
+
+I'd make every post look like a little Victorian Christmas-card-meets-modern-data-viz:
+
+A CHRISTMAS CHART CAROL
+ Day 7 of 24
+
+👻 The Ghost of Data Past
+
+THE SLOPE CHART
+
+“But numbers have long memories.”
+
+[the actual chart]
+
+WHAT STORY DOES IT TELL?
+ Christmas spending, 2016 → 2026
+
+WHEN TO USE IT
+ When the change matters more than the absolute values.
+
+Then a tiny footer:
+
+Tales with Charts · Frank Ellingsen · #DataVisualization #PowerBI
+
+That would give the individual posts a consistent visual language while letting each chart be the star.
+
+And there is an even stronger idea
+
+Don't make Days 1–24 random.
+
+Make the advent calendar itself tell Dickens' story:
+
+I. The Ghost of Data Past 👻
+ Days 1–8
+ Historical/change-over-time charts
+
+II. The Ghost of Data Present 🕯️
+ Days 9–16
+ Comparison, distribution, ranking, part-to-whole
+
+III. The Ghost of Data Yet to Come 🔮
+ Days 17–23
+ Relationships, uncertainty, scenarios, forecasts
+
+Christmas Eve 🎄
+ Day 24
+ Bring several visualisations together into one complete data story.
+
+That last one becomes:
+
+The Moral of the Story
+
+A chart shows the numbers.
+ A story gives them meaning.
+
+The categories wouldn't map perfectly one-to-one onto FT's taxonomy, so I'd treat that grouping as our editorial concept, not something attributed to FT.
+
+And, importantly, FT describes the original resource as a way to improve chart literacy and recognize opportunities to use graphics effectively alongside words. That is very close to what your LinkedIn experiment would demonstrate.
+
+I think this is stronger than simply “posting 24 charts.” It becomes a recognizable December series with a narrative, educational purpose, visual identity, and a finale.
+
+If we make an image next, I'd create the cover/poster for the series first: Victorian snowy London, subtle ghosts formed from charts/data, warm candlelight, dark FT-like editorial sophistication, with space for the title A Christmas Chart Carol.
