@@ -415,12 +415,45 @@
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     position: relative;
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .card-img-wrap:hover .card-img {
+    transform: scale(1.05);
   }
   .card-img {
     max-height: 200px;
     max-width: 100%;
     object-fit: contain;
     border-radius: 4px;
+    transition: transform 0.25s ease-out;
+    display: block;
+    margin: 0 auto;
+  }
+  .zoom-overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(10, 17, 40, 0.9);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .card-img-wrap:hover .zoom-overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
   .card-badge {
     position: absolute;
@@ -434,6 +467,7 @@
     background: var(--bg-dark);
     color: var(--accent-gold);
     border: 1px solid var(--accent-gold);
+    z-index: 2;
   }
   .card-body {
     padding: 16px;
@@ -536,6 +570,168 @@
     color: #FFFFFF;
   }
 
+  /* Fullscreen Lightbox */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(3, 7, 18, 0.94);
+    backdrop-filter: blur(12px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    cursor: zoom-out;
+  }
+  .lightbox-overlay.active {
+    display: flex;
+  }
+  .lightbox-box {
+    max-width: 1240px;
+    width: 96vw;
+    max-height: 96vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #0A1128;
+    border: 1px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 16px 20px 14px 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+    cursor: default;
+  }
+  .lightbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+  .lightbox-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .lightbox-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 2px 0 0 0;
+  }
+  .lightbox-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lightbox-tool-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #E2E8F0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .lightbox-tool-btn:hover {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #0A1128;
+  }
+  .lightbox-close {
+    font-size: 1.6rem;
+    line-height: 1;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0 6px;
+    margin-left: 4px;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover {
+    color: #FFFFFF;
+  }
+  .lightbox-main-view {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #050914;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 10px;
+    flex-grow: 1;
+    min-height: 380px;
+    max-height: 68vh;
+    overflow: hidden;
+  }
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 66vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+  }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 17, 40, 0.85);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+  }
+  .lightbox-arrow:hover {
+    background: var(--accent-gold);
+    color: #0A1128;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .lightbox-arrow-left { left: 14px; }
+  .lightbox-arrow-right { right: 14px; }
+
+  .lightbox-caption-bar {
+    background: rgba(16, 31, 66, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #CBD5E1;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .lightbox-headline {
+    color: #4ADE80;
+    font-weight: 700;
+  }
+  .lightbox-counter {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+  }
+
   /* Footer */
   footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -595,7 +791,7 @@
     <div class="dual-artwork-grid">
       <!-- Card 1: image00.png -->
       <div class="artwork-card">
-        <div class="artwork-img-box">
+        <div class="artwork-img-box" onclick="openCustomLightbox('img24/image00.png', 'Featured Artwork 01 · Landscape Banner', 'A Christmas Chart Carol: The Storyteller Meets Data Storytelling', 'Cinematic Victorian snowy London series banner depicting warm candlelight, illuminated Advent calendar windows, and subtle spectral charts emerging from the London fog.')" style="cursor: zoom-in;" title="Click to view full screen">
           <img src="img24/image00.png" class="artwork-img" alt="A Christmas Chart Carol - Cinematic Master Banner">
         </div>
         <div class="artwork-info">
@@ -609,15 +805,16 @@
               The grand cinematic series banner. Depicts Victorian snowy London with warm candlelight, illuminated Advent calendar windows, and subtle spectral charts emerging from the London fog.
             </p>
           </div>
-          <div>
-            <a href="img24/image00.png" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 14px;">🔎 View Full Resolution</a>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary" style="font-size: 0.8rem; padding: 6px 14px;" onclick="openCustomLightbox('img24/image00.png', 'Featured Artwork 01 · Landscape Banner', 'A Christmas Chart Carol: The Storyteller Meets Data Storytelling', 'Cinematic Victorian snowy London series banner depicting warm candlelight, illuminated Advent calendar windows, and subtle spectral charts emerging from the London fog.')">🔍 View Full Screen</button>
+            <a href="img24/image00.png" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 14px;">🔗 Raw Image</a>
           </div>
         </div>
       </div>
 
       <!-- Card 2: image001.png -->
       <div class="artwork-card">
-        <div class="artwork-img-box">
+        <div class="artwork-img-box" onclick="openCustomLightbox('img24/image001.png', 'Featured Artwork 02 · Portrait Cover Card', 'The Ghosts of Data Past, Present & Yet to Come', 'Collector edition vertical portrait card designed for mobile feeds and publication cover pages, highlighting the three data visitations in rich Victorian crimson and gold.')" style="cursor: zoom-in;" title="Click to view full screen">
           <img src="img24/image001.png" class="artwork-img" alt="A Christmas Chart Carol - Collector's Portrait Card">
         </div>
         <div class="artwork-info">
@@ -631,8 +828,9 @@
               The collector's edition vertical portrait. Designed for mobile feeds and publication cover pages, highlighting the three data visitations in rich Victorian crimson and gold.
             </p>
           </div>
-          <div>
-            <a href="img24/image001.png" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 14px;">🔎 View Full Resolution</a>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary" style="font-size: 0.8rem; padding: 6px 14px;" onclick="openCustomLightbox('img24/image001.png', 'Featured Artwork 02 · Portrait Cover Card', 'The Ghosts of Data Past, Present & Yet to Come', 'Collector edition vertical portrait card designed for mobile feeds and publication cover pages, highlighting the three data visitations in rich Victorian crimson and gold.')">🔍 View Full Screen</button>
+            <a href="img24/image001.png" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 14px;">🔗 Raw Image</a>
           </div>
         </div>
       </div>
@@ -677,6 +875,7 @@
       <h2 class="section-title">The 25-Day Visual Masterclass</h2>
       <p class="section-desc">
         Daily lessons in Headlines, Direct Labeling vs Legends, Annotations, and Tufte's Data-Ink Ratio.
+        <br><span style="color: var(--accent-gold); font-size: 0.85rem; font-weight: 600;">✨ Click any visual card to expand and view in high-resolution full screen.</span>
       </p>
     </div>
 
@@ -691,6 +890,38 @@
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">&times;</button>
     <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Fullscreen Lightbox Modal -->
+<div id="lightboxModal" class="lightbox-overlay" onclick="closeLightbox(event)">
+  <div class="lightbox-box" onclick="event.stopPropagation()">
+    <div class="lightbox-header">
+      <div class="lightbox-title-box">
+        <div class="lightbox-tag" id="lightboxTag">Day 01 &bull; Horizontal Bar Chart</div>
+        <h3 class="lightbox-title" id="lightboxTitle">The Bar Chart</h3>
+      </div>
+      <div class="lightbox-toolbar">
+        <span class="lightbox-counter" id="lightboxCounter">1 of 25</span>
+        <button class="lightbox-tool-btn" onclick="toggleTrueFullscreen()" title="Toggle Browser Fullscreen">⛶ True Fullscreen</button>
+        <a id="lightboxOriginalLink" href="#" target="_blank" class="lightbox-tool-btn" title="Open Full-Resolution File in New Tab">🔗 Raw Image</a>
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+      </div>
+    </div>
+
+    <div class="lightbox-main-view">
+      <button class="lightbox-arrow lightbox-arrow-left" onclick="prevLightbox(event)" title="Previous Visual (Left Arrow)">&larr;</button>
+      <img id="lightboxImg" src="" class="lightbox-img" alt="Visual Full Screen">
+      <button class="lightbox-arrow lightbox-arrow-right" onclick="nextLightbox(event)" title="Next Visual (Right Arrow)">&rarr;</button>
+    </div>
+
+    <div class="lightbox-caption-bar">
+      <div id="lightboxHeadline"><strong>Action Headline:</strong> Loading...</div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="card-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="viewPostFromLightbox()">📱 View LinkedIn Post Details</button>
+        <span style="color: var(--text-secondary); font-size: 0.75rem;">Shortcuts: <strong>&larr; / &rarr;</strong> to browse &bull; <strong>ESC</strong> to close &bull; <strong>F</strong> for fullscreen</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -872,9 +1103,10 @@
     let html = '';
     postsData.forEach(p => {
       html += `<div class="masterclass-card">
-        <div class="card-img-wrap">
+        <div class="card-img-wrap" onclick="openLightbox(${p.id})" title="Click to view ${p.title} in Full Screen">
           <span class="card-badge">${p.day}</span>
           <img src="${p.image}" class="card-img" alt="${p.title}">
+          <div class="zoom-overlay"><span>🔍</span> View Full Screen</div>
         </div>
         <div class="card-body">
           <div>
@@ -887,14 +1119,117 @@
             </div>
             <p class="card-rule">💡 ${p.rule}</p>
           </div>
-          <div>
-            <button class="card-btn" onclick="openModal(${p.id})">📱 View Full LinkedIn Post Copy</button>
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button class="card-btn" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px;" onclick="openLightbox(${p.id})">🔍 Full Screen</button>
+            <button class="card-btn" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px;" onclick="openModal(${p.id})">📱 Post Copy</button>
           </div>
         </div>
       </div>`;
     });
     grid.innerHTML = html;
   }
+
+  // Lightbox State & Controls
+  let currentLightboxIndex = 0;
+  let isCustomArtwork = false;
+
+  function openLightbox(id) {
+    const idx = postsData.findIndex(item => item.id === id);
+    if (idx === -1) return;
+    currentLightboxIndex = idx;
+    isCustomArtwork = false;
+    updateLightboxContent();
+    document.getElementById('lightboxModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function openCustomLightbox(imgSrc, tag, title, headline) {
+    isCustomArtwork = true;
+    document.getElementById('lightboxTag').innerText = tag;
+    document.getElementById('lightboxTitle').innerText = title;
+    const imgEl = document.getElementById('lightboxImg');
+    imgEl.src = imgSrc;
+    imgEl.alt = title;
+    document.getElementById('lightboxHeadline').innerHTML = `<span class="lightbox-headline">Description:</span> ${headline}`;
+    document.getElementById('lightboxOriginalLink').href = imgSrc;
+    document.getElementById('lightboxCounter').innerText = 'Artwork';
+    document.getElementById('lightboxModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target && e.target.closest('.lightbox-box') && !e.target.classList.contains('lightbox-close')) {
+      return;
+    }
+    document.getElementById('lightboxModal').classList.remove('active');
+    document.body.style.overflow = '';
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+  }
+
+  function nextLightbox(e) {
+    if (e) e.stopPropagation();
+    if (isCustomArtwork) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % postsData.length;
+    updateLightboxContent();
+  }
+
+  function prevLightbox(e) {
+    if (e) e.stopPropagation();
+    if (isCustomArtwork) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + postsData.length) % postsData.length;
+    updateLightboxContent();
+  }
+
+  function updateLightboxContent() {
+    const p = postsData[currentLightboxIndex];
+    document.getElementById('lightboxTag').innerText = `${p.day} • ${p.act} • ${p.chart_type}`;
+    document.getElementById('lightboxTitle').innerText = p.title;
+    const imgEl = document.getElementById('lightboxImg');
+    imgEl.src = p.image;
+    imgEl.alt = p.title;
+    document.getElementById('lightboxHeadline').innerHTML = `<span class="lightbox-headline">Action Headline:</span> "${p.action_headline}"`;
+    document.getElementById('lightboxOriginalLink').href = p.image;
+    document.getElementById('lightboxCounter').innerText = `${currentLightboxIndex + 1} of ${postsData.length}`;
+  }
+
+  function viewPostFromLightbox() {
+    const p = postsData[currentLightboxIndex];
+    closeLightbox();
+    openModal(p.id);
+  }
+
+  function toggleTrueFullscreen() {
+    const box = document.getElementById('lightboxModal');
+    if (!document.fullscreenElement) {
+      if (box.requestFullscreen) {
+        box.requestFullscreen();
+      } else if (box.webkitRequestFullscreen) {
+        box.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
+  // Global Keyboard Navigation
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightboxModal');
+    if (lb && lb.classList.contains('active')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextLightbox();
+      if (e.key === 'ArrowLeft') prevLightbox();
+      if (e.key === 'f' || e.key === 'F') toggleTrueFullscreen();
+    } else {
+      const pm = document.getElementById('postModal');
+      if (pm && pm.classList.contains('active') && e.key === 'Escape') {
+        closeModal();
+      }
+    }
+  });
 
   function openModal(id) {
     const p = postsData.find(item => item.id === id);
